@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FakrulRadzi Othman Portfolio</title>
+    <title>FakrulRadzi Othman — Fullstack Developer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="icon" type="image/png" href="IMG_20220602_025956_C.png" />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -16,25 +16,19 @@
         --bg: #020617;
         --bg2: #0f172a;
         --bg3: #1e293b;
-        --panel: #111827;
-
-        --border: #1e40af;
-
-        /* Cyan / Blue Theme */
+        --panel: #0d1b2e;
+        --border: #1e3a5f;
         --primary: #22d3ee;
         --primary2: #06b6d4;
         --primary3: #0891b2;
         --primary-dim: #083344;
-
-        --cyan: #67e8f9;
         --amber: #fbbf24;
-
-        /* Text */
+        --cyan: #67e8f9;
         --text: #e2e8f0;
         --text-dim: #94a3b8;
-        --text-mute: #64748b;
-
-        --font-mono: "JetBrains Mono", "Space Mono", monospace;
+        --text-mute: #475569;
+        --font: "JetBrains Mono", monospace;
+        --nav-h: 54px;
       }
 
       *,
@@ -44,21 +38,21 @@
         margin: 0;
         padding: 0;
       }
-
-      html {
-        scroll-behavior: smooth;
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
       }
 
       body {
         background: var(--bg);
         color: var(--text);
-        font-family: var(--font-mono);
+        font-family: var(--font);
         font-size: 14px;
         line-height: 1.7;
-        overflow-x: hidden;
       }
 
-      /* Scanline overlay */
+      /* scanlines */
       body::before {
         content: "";
         position: fixed;
@@ -67,104 +61,134 @@
           0deg,
           transparent,
           transparent 2px,
-          rgba(0, 0, 0, 0.07) 2px,
-          rgba(0, 0, 0, 0.07) 4px
+          rgba(0, 0, 0, 0.06) 2px,
+          rgba(0, 0, 0, 0.06) 4px
         );
         pointer-events: none;
         z-index: 9999;
       }
 
-      /* Noise texture */
-      body::after {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 9998;
-        opacity: 0.4;
-      }
-
-      /* ─── SCROLLBAR ─── */
       ::-webkit-scrollbar {
-        width: 6px;
+        width: 4px;
       }
       ::-webkit-scrollbar-track {
         background: var(--bg);
       }
       ::-webkit-scrollbar-thumb {
         background: var(--primary3);
-        border-radius: 3px;
+        border-radius: 2px;
       }
 
-      /* ─── NAV ─── */
+      /* ── NAV ── */
       nav {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        z-index: 100;
+        z-index: 200;
+        height: var(--nav-h);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 clamp(1.5rem, 5vw, 4rem);
-        height: 56px;
-        background: rgba(2, 6, 23, 0.92);
-        backdrop-filter: blur(12px);
+        padding: 0 clamp(1.2rem, 4vw, 3.5rem);
+        background: rgba(2, 6, 23, 0.95);
+        backdrop-filter: blur(14px);
         border-bottom: 1px solid var(--border);
       }
 
       .nav-logo {
         color: var(--primary);
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         font-weight: 700;
         letter-spacing: 0.05em;
         text-decoration: none;
       }
-
       .nav-logo span {
-        color: var(--text-dim);
+        color: var(--text-mute);
       }
 
       .nav-links {
         display: flex;
-        gap: 2rem;
+        gap: 0;
         list-style: none;
       }
 
-      .nav-links a {
-        color: var(--text-dim);
-        text-decoration: none;
-        font-size: 0.78rem;
+      .nav-links button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-mute);
+        font-family: var(--font);
+        font-size: 0.76rem;
         letter-spacing: 0.08em;
+        padding: 0.4rem 0.9rem;
         transition: color 0.2s;
         position: relative;
       }
-
-      .nav-links a::before {
+      .nav-links button::before {
         content: "# ";
         color: var(--primary3);
         transition: color 0.2s;
       }
-
-      .nav-links a:hover {
+      .nav-links button:hover,
+      .nav-links button.active {
         color: var(--primary);
       }
-      .nav-links a:hover::before {
+      .nav-links button.active::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0.9rem;
+        right: 0.9rem;
+        height: 2px;
+        background: var(--primary);
+        border-radius: 2px;
+      }
+      .nav-links button:hover::before,
+      .nav-links button.active::before {
         color: var(--primary);
       }
 
-      /* ─── HERO ─── */
+      /* ── PAGE WRAPPER ── */
+      #app {
+        position: fixed;
+        top: var(--nav-h);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+      }
+
+      /* ── SECTIONS ── */
+      .page {
+        position: absolute;
+        inset: 0;
+        overflow-y: auto;
+        padding: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 7vw, 8rem);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(14px);
+        transition:
+          opacity 0.35s ease,
+          transform 0.35s ease;
+      }
+      .page.active {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      /* ── HERO ── */
       #hero {
-        min-height: 100vh;
         display: flex;
         align-items: center;
-        padding: 0 clamp(1.5rem, 8vw, 10rem);
+        min-height: 100%;
+        padding-top: 0;
+        padding-bottom: 0;
         position: relative;
         overflow: hidden;
       }
 
-      /* Grid background */
       #hero::before {
         content: "";
         position: absolute;
@@ -173,21 +197,19 @@
           linear-gradient(var(--border) 1px, transparent 1px),
           linear-gradient(90deg, var(--border) 1px, transparent 1px);
         background-size: 48px 48px;
-        opacity: 0.4;
+        opacity: 0.25;
       }
-
-      /* Glow orb */
       #hero::after {
         content: "";
         position: absolute;
-        top: 20%;
-        left: 55%;
-        width: 500px;
-        height: 500px;
+        top: 10%;
+        left: 50%;
+        width: 600px;
+        height: 600px;
         background: radial-gradient(
           circle,
-          rgba(56, 189, 248, 0.1) 0%,
-          transparent 70%
+          rgba(34, 211, 238, 0.07) 0%,
+          transparent 65%
         );
         pointer-events: none;
       }
@@ -195,7 +217,7 @@
       .hero-content {
         position: relative;
         z-index: 1;
-        max-width: 720px;
+        max-width: 700px;
       }
 
       .hero-tag {
@@ -203,24 +225,21 @@
         align-items: center;
         gap: 0.5rem;
         color: var(--primary);
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         letter-spacing: 0.15em;
         text-transform: uppercase;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.2rem;
       }
-
       .hero-tag::before {
         content: "";
-        display: inline-block;
         width: 8px;
         height: 8px;
         background: var(--primary);
         border-radius: 50%;
         box-shadow: 0 0 8px var(--primary);
-        animation: blink 1.6s ease-in-out infinite;
+        animation: pulse 1.6s ease-in-out infinite;
       }
-
-      @keyframes blink {
+      @keyframes pulse {
         0%,
         100% {
           opacity: 1;
@@ -231,139 +250,121 @@
       }
 
       .hero-name {
-        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        font-size: clamp(2.4rem, 6vw, 4.8rem);
         font-weight: 700;
         line-height: 1.05;
         letter-spacing: -0.02em;
         color: #f8fafc;
         margin-bottom: 0.3rem;
       }
-
       .hero-name .cursor {
         display: inline-block;
         width: 3px;
-        height: 0.85em;
+        height: 0.82em;
         background: var(--primary);
         margin-left: 4px;
         vertical-align: middle;
-        animation: blink 1s step-end infinite;
+        animation: pulse 1s step-end infinite;
         box-shadow: 0 0 10px var(--primary);
       }
 
       .hero-role {
-        font-size: clamp(1rem, 2.5vw, 1.4rem);
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
         color: var(--primary);
-        font-weight: 400;
-        margin-bottom: 1.5rem;
-        letter-spacing: 0.03em;
+        margin-bottom: 1.2rem;
       }
-
-      .hero-role .bracket {
+      .hero-role .br {
         color: var(--text-mute);
       }
 
       .hero-desc {
         color: var(--text-dim);
-        font-size: 0.88rem;
-        max-width: 520px;
-        line-height: 1.8;
-        margin-bottom: 2.5rem;
+        font-size: 0.85rem;
+        max-width: 540px;
+        line-height: 1.85;
+        margin-bottom: 2rem;
       }
 
       .hero-cta {
         display: flex;
-        gap: 1rem;
+        gap: 0.8rem;
         flex-wrap: wrap;
       }
 
+      /* ── BUTTONS ── */
       .btn {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.65rem 1.4rem;
-        font-family: var(--font-mono);
-        font-size: 0.8rem;
-        letter-spacing: 0.05em;
+        gap: 0.4rem;
+        padding: 0.6rem 1.2rem;
+        font-family: var(--font);
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
         text-decoration: none;
         border-radius: 3px;
         transition: all 0.2s;
         cursor: pointer;
         border: none;
       }
-
       .btn-primary {
         background: var(--primary);
-        color: white;
-        box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+        color: #020617;
         font-weight: 700;
+        box-shadow: 0 0 20px rgba(34, 211, 238, 0.25);
       }
-
       .btn-primary:hover {
-        background: var(--primary2);
+        background: var(--cyan);
+        box-shadow: 0 0 30px rgba(34, 211, 238, 0.4);
       }
-
       .btn-secondary {
         background: transparent;
         color: var(--primary);
         border: 1px solid var(--primary3);
       }
-
       .btn-secondary:hover {
         border-color: var(--primary);
-        background: rgba(34, 211, 238, 0.08);
+        background: rgba(34, 211, 238, 0.06);
       }
 
-      /* ─── SECTION SHARED ─── */
-      section {
-        padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 8vw, 10rem);
-      }
-
-      .section-label {
+      /* ── SECTION HEADER ── */
+      .sec-label {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 0.8rem;
         color: var(--primary);
-        font-size: 0.72rem;
+        font-size: 0.68rem;
         letter-spacing: 0.2em;
         text-transform: uppercase;
-        margin-bottom: 0.6rem;
+        margin-bottom: 0.4rem;
       }
-
-      .section-label::after {
+      .sec-label::after {
         content: "";
         flex: 1;
-        max-width: 80px;
+        max-width: 60px;
         height: 1px;
         background: var(--primary3);
       }
-
-      .section-title {
-        font-size: clamp(1.6rem, 3vw, 2.2rem);
+      .sec-title {
+        font-size: clamp(1.4rem, 2.5vw, 1.9rem);
         font-weight: 700;
         color: #f8fafc;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
         letter-spacing: -0.01em;
       }
 
-      /* ─── ABOUT ─── */
-      #about {
-        background: var(--bg2);
-      }
-
+      /* ── ABOUT ── */
       .about-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 4rem;
+        gap: 3rem;
         align-items: start;
       }
-
       .about-text p {
         color: var(--text-dim);
-        font-size: 0.87rem;
-        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        margin-bottom: 0.9rem;
         line-height: 1.9;
       }
-
       .about-text p strong {
         color: var(--primary);
         font-weight: 500;
@@ -375,223 +376,177 @@
         border-radius: 6px;
         overflow: hidden;
       }
-
       .terminal-bar {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.6rem 1rem;
+        gap: 0.4rem;
+        padding: 0.55rem 0.9rem;
         background: var(--bg3);
         border-bottom: 1px solid var(--border);
       }
-
       .dot {
         width: 10px;
         height: 10px;
         border-radius: 50%;
       }
-
-      .dot-red {
+      .dot-r {
         background: #ff5f57;
       }
-      .dot-amber {
+      .dot-a {
         background: #febc2e;
       }
-      .dot-green {
+      .dot-g {
         background: #28c840;
       }
-
-      .terminal-title {
+      .t-file {
         margin-left: auto;
-        font-size: 0.7rem;
+        font-size: 0.68rem;
         color: var(--text-mute);
-        letter-spacing: 0.1em;
       }
-
-      .terminal-body {
-        padding: 1.2rem 1.4rem;
-        font-size: 0.8rem;
+      .t-body {
+        padding: 1rem 1.2rem;
+        font-size: 0.78rem;
       }
-
       .t-line {
         display: flex;
-        gap: 0.6rem;
-        margin-bottom: 0.4rem;
+        gap: 0.5rem;
+        margin-bottom: 0.35rem;
       }
-      .t-prompt {
+      .t-pr {
         color: var(--primary);
         user-select: none;
       }
-      .t-cmd {
+      .t-cm {
         color: #f8fafc;
       }
-      .t-output {
+      .t-out {
         color: var(--text-dim);
-        padding-left: 1.2rem;
-        margin-bottom: 0.6rem;
+        padding-left: 1rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.8;
       }
-      .t-key {
-        color: #fbbf24;
+      .t-k {
+        color: var(--amber);
       }
-      .t-val {
-        color: #67e8f9;
-      }
-
-      /* ─── SKILLS ─── */
-      #skills {
-        background: var(--bg);
+      .t-v {
+        color: var(--cyan);
       }
 
+      /* ── SKILLS ── */
       .skills-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 1.2rem;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1rem;
       }
-
-      .skill-category {
+      .skill-cat {
         background: var(--panel);
         border: 1px solid var(--border);
         border-radius: 6px;
-        padding: 1.4rem;
+        padding: 1.2rem;
         transition:
           border-color 0.2s,
           box-shadow 0.2s;
       }
-
-      .skill-category:hover {
+      .skill-cat:hover {
         border-color: var(--primary3);
-        box-shadow:
-          0 12px 40px rgba(0, 0, 0, 0.4),
-          0 0 20px rgba(34, 211, 238, 0.15);
+        box-shadow: 0 0 20px rgba(34, 211, 238, 0.07);
       }
-
       .skill-cat-title {
         color: var(--primary);
-        font-size: 0.72rem;
-        letter-spacing: 0.15em;
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
-        margin-bottom: 1rem;
-        padding-bottom: 0.6rem;
+        margin-bottom: 0.8rem;
+        padding-bottom: 0.5rem;
         border-bottom: 1px solid var(--border);
       }
-
-      .skill-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      .skill-tag {
-        background: var(--bg3);
-        border: 1px solid var(--border);
-        color: var(--text);
-        font-size: 0.75rem;
-        padding: 0.3rem 0.7rem;
-        border-radius: 3px;
-        letter-spacing: 0.03em;
-        transition: all 0.15s;
-      }
-
-      .skill-tag:hover {
-        border-color: var(--primary);
-        color: var(--primary);
-        background: rgba(34, 211, 238, 0.05);
-      }
-
-      /* ─── EXPERIENCE ─── */
-      #experience {
-        background: var(--bg2);
-      }
-
-      .exp-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-      }
-
-      .exp-item {
-        display: grid;
-        grid-template-columns: 180px 1fr;
-        gap: 2rem;
-        padding: 2rem 0;
-        border-bottom: 1px solid var(--border);
-        position: relative;
-      }
-
-      .exp-item:last-child {
-        border-bottom: none;
-      }
-
-      .exp-date {
-        color: var(--text-mute);
-        font-size: 0.75rem;
-        letter-spacing: 0.05em;
-        padding-top: 0.2rem;
-        position: sticky;
-        top: 80px;
-        align-self: start;
-      }
-
-      .exp-date .exp-period {
-        color: var(--text-dim);
-        display: block;
-        margin-bottom: 0.3rem;
-      }
-
-      .exp-role {
-        font-size: 1rem;
-        font-weight: 700;
-        color: #f8fafc;
-        margin-bottom: 0.2rem;
-      }
-
-      .exp-company {
-        color: var(--primary);
-        font-size: 0.82rem;
-        margin-bottom: 0.8rem;
-      }
-
-      .exp-desc {
-        color: var(--text-dim);
-        font-size: 0.83rem;
-        line-height: 1.85;
-        margin-bottom: 0.8rem;
-      }
-
-      .exp-stack {
+      .tags {
         display: flex;
         flex-wrap: wrap;
         gap: 0.4rem;
       }
+      .tag {
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-size: 0.72rem;
+        padding: 0.25rem 0.6rem;
+        border-radius: 3px;
+        transition: all 0.15s;
+      }
+      .tag:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+        background: rgba(34, 211, 238, 0.04);
+      }
 
+      /* ── EXPERIENCE ── */
+      .exp-item {
+        display: grid;
+        grid-template-columns: 170px 1fr;
+        gap: 1.5rem;
+        padding: 1.6rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .exp-item:last-child {
+        border-bottom: none;
+      }
+      .exp-date {
+        color: var(--text-mute);
+        font-size: 0.72rem;
+        padding-top: 0.15rem;
+      }
+      .exp-period {
+        color: var(--text-dim);
+        display: block;
+        margin-bottom: 0.2rem;
+        font-size: 0.75rem;
+      }
+      .exp-role {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #f8fafc;
+        margin-bottom: 0.15rem;
+      }
+      .exp-company {
+        color: var(--primary);
+        font-size: 0.78rem;
+        margin-bottom: 0.6rem;
+      }
+      .exp-desc {
+        color: var(--text-dim);
+        font-size: 0.8rem;
+        line-height: 1.85;
+        margin-bottom: 0.6rem;
+      }
+      .exp-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
       .exp-tech {
         background: var(--primary-dim);
         color: var(--primary);
-        font-size: 0.7rem;
-        padding: 0.2rem 0.6rem;
+        font-size: 0.67rem;
+        padding: 0.18rem 0.55rem;
         border-radius: 2px;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.04em;
       }
 
-      /* ─── PROJECTS ─── */
-      #projects {
-        background: var(--bg);
-      }
-
+      /* ── PROJECTS ── */
       .projects-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 1.4rem;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.1rem;
       }
-
-      .project-card {
+      .proj-card {
         background: var(--panel);
         border: 1px solid var(--border);
         border-radius: 6px;
-        padding: 1.6rem;
+        padding: 1.4rem;
         display: flex;
         flex-direction: column;
-        gap: 0.8rem;
+        gap: 0.7rem;
         transition:
           border-color 0.2s,
           transform 0.2s,
@@ -599,8 +554,7 @@
         position: relative;
         overflow: hidden;
       }
-
-      .project-card::before {
+      .proj-card::before {
         content: "";
         position: absolute;
         top: 0;
@@ -611,669 +565,573 @@
         opacity: 0;
         transition: opacity 0.2s;
       }
-
-      .project-card:hover {
+      .proj-card:hover {
         border-color: var(--primary3);
-        transform: translateY(-3px);
-        box-shadow:
-          0 12px 40px rgba(0, 0, 0, 0.4),
-          0 0 20px rgba(57, 255, 106, 0.05);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       }
-
-      .project-card:hover::before {
+      .proj-card:hover::before {
         opacity: 1;
       }
-
-      .project-num {
+      .proj-num {
         color: var(--text-mute);
-        font-size: 0.7rem;
+        font-size: 0.67rem;
         letter-spacing: 0.1em;
       }
-
-      .project-name {
-        font-size: 1.05rem;
+      .proj-name {
+        font-size: 1rem;
         font-weight: 700;
         color: #f8fafc;
       }
-
-      .project-desc {
+      .proj-desc {
         color: var(--text-dim);
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         line-height: 1.8;
         flex: 1;
       }
-
-      .project-stack {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-      }
-
-      .project-links {
+      .proj-links {
         display: flex;
         gap: 1rem;
-        padding-top: 0.6rem;
+        padding-top: 0.5rem;
         border-top: 1px solid var(--border);
       }
-
-      .project-link {
+      .proj-link {
         color: var(--text-mute);
-        font-size: 0.75rem;
+        font-size: 0.73rem;
         text-decoration: none;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.04em;
         transition: color 0.15s;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
       }
-
-      .project-link:hover {
+      .proj-link:hover {
         color: var(--primary);
       }
 
-      /* ─── CONTACT ─── */
+      /* ── CONTACT ── */
       #contact {
-        background: var(--bg2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100%;
         text-align: center;
       }
-
       .contact-inner {
-        max-width: 580px;
-        margin: 0 auto;
+        max-width: 520px;
       }
-
       .contact-desc {
         color: var(--text-dim);
-        font-size: 0.87rem;
-        margin-bottom: 2.5rem;
+        font-size: 0.85rem;
+        margin-bottom: 2rem;
         line-height: 1.9;
       }
-
+      .contact-email {
+        font-size: 1rem;
+        color: var(--primary);
+        text-decoration: none;
+        border-bottom: 1px solid var(--primary3);
+        padding-bottom: 2px;
+        transition: border-color 0.2s;
+        display: inline-block;
+        margin-bottom: 1.8rem;
+      }
+      .contact-email:hover {
+        border-color: var(--primary);
+      }
       .contact-links {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 1rem;
-        margin-bottom: 3rem;
+        gap: 0.8rem;
       }
-
       .contact-link {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.7rem 1.4rem;
+        gap: 0.4rem;
+        padding: 0.6rem 1.2rem;
         background: var(--panel);
         border: 1px solid var(--border);
         border-radius: 4px;
         color: var(--text-dim);
         text-decoration: none;
-        font-size: 0.8rem;
-        letter-spacing: 0.05em;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
         transition: all 0.2s;
       }
-
       .contact-link:hover {
         border-color: var(--primary);
         color: var(--primary);
-        background: rgba(34, 211, 238, 0.05);
+        background: rgba(34, 211, 238, 0.04);
       }
 
-      .contact-email {
-        font-size: 1.1rem;
-        color: var(--primary);
-        letter-spacing: 0.03em;
-        text-decoration: none;
-        border-bottom: 1px solid var(--primary3);
-        padding-bottom: 2px;
-        transition: border-color 0.2s;
-      }
-
-      .contact-email:hover {
-        border-color: var(--primary);
-      }
-
-      /* ─── FOOTER ─── */
+      /* ── FOOTER ── */
       footer {
-        background: var(--bg);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(2, 6, 23, 0.9);
         border-top: 1px solid var(--border);
-        padding: 1.5rem clamp(1.5rem, 8vw, 10rem);
+        padding: 0.5rem clamp(1.5rem, 7vw, 8rem);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 0.72rem;
+        font-size: 0.68rem;
         color: var(--text-mute);
-        letter-spacing: 0.05em;
+        letter-spacing: 0.04em;
+        z-index: 100;
       }
-
-      footer span {
+      footer em {
         color: var(--primary3);
+        font-style: normal;
       }
 
-      /* ─── RESPONSIVE ─── */
-      @media (max-width: 768px) {
-        .nav-links {
-          display: none;
+      /* ── RESPONSIVE ── */
+      @media (max-width: 700px) {
+        .nav-links button {
+          padding: 0.4rem 0.5rem;
+          font-size: 0.68rem;
         }
-
         .about-grid {
           grid-template-columns: 1fr;
-          gap: 2rem;
+          gap: 1.5rem;
         }
-
         .exp-item {
           grid-template-columns: 1fr;
-          gap: 0.5rem;
+          gap: 0.4rem;
         }
-
-        .exp-date {
-          position: static;
-        }
-
-        footer {
-          flex-direction: column;
-          gap: 0.5rem;
-          text-align: center;
-        }
-      }
-
-      /* ─── FADE-IN ANIMATION ─── */
-      .fade-in {
-        opacity: 0;
-        transform: translateY(20px);
-        transition:
-          opacity 0.6s ease,
-          transform 0.6s ease;
-      }
-
-      .fade-in.visible {
-        opacity: 1;
-        transform: none;
       }
     </style>
   </head>
   <body>
-    <!-- NAV -->
     <nav>
-      <a href="#hero" class="nav-logo">&gt; <span>dev</span>/FakrulRadzi_</a>
+      <a href="#" class="nav-logo">&gt; <span>dev/</span>FakrulRadzi_</a>
       <ul class="nav-links">
-        <li><a href="#about">about</a></li>
-        <li><a href="#skills">skills</a></li>
-        <li><a href="#experience">experience</a></li>
-        <li><a href="#projects">projects</a></li>
-        <li><a href="#contact">contact</a></li>
+        <li><button data-page="hero" class="active">home</button></li>
+        <li><button data-page="about">about</button></li>
+        <li><button data-page="skills">skills</button></li>
+        <li><button data-page="experience">experience</button></li>
+        <li><button data-page="projects">projects</button></li>
+        <li><button data-page="contact">contact</button></li>
       </ul>
     </nav>
 
-    <!-- HERO -->
-    <section id="hero">
-      <div class="hero-content">
-        <div class="hero-tag">available for opportunities</div>
-        <h1 class="hero-name">
-          FakrulRadzi Othman<span class="cursor"></span>
-        </h1>
-        <p class="hero-role">
-          <span class="bracket">&#123; </span>Fullstack Developer<span
-            class="bracket"
-          >
-            &#125;</span
-          >
-        </p>
-        <p class="hero-desc">
-          PHP/Laravel Developer with 3+ years of experience in full-stack web
-          development, RESTful API design, and database optimization (MySQL,
-          MSSQL). Proven track record delivering production systems across
-          enterprise, government, and banking sectors. Hands-on experience with
-          the full SDLC including system design, development, SIT/UAT testing,
-          deployment, and production support. Delivered RM160,000 in operational
-          cost savings through system automation at current role.
-        </p>
-        <div class="hero-cta">
-          <a href="#projects" class="btn btn-primary"
-            >&#x25B6; view_projects()</a
-          >
-          <a href="#contact" class="btn btn-secondary">&#x40; get_in_touch()</a>
+    <div id="app">
+      <!-- HERO -->
+      <div class="page active" id="hero">
+        <div class="hero-content">
+          <div class="hero-tag">available for opportunities</div>
+          <h1 class="hero-name">
+            FakrulRadzi Othman<span class="cursor"></span>
+          </h1>
+          <p class="hero-role">
+            <span class="br">{ </span>Fullstack Developer<span class="br">
+              }</span
+            >
+          </p>
+          <p class="hero-desc">
+            PHP/Laravel Developer with 3+ years of experience in full-stack web
+            development, RESTful API design, and database optimization (MySQL,
+            MSSQL). Delivered RM160,000 in operational cost savings through
+            system automation. Experienced across enterprise, government, and
+            banking sectors.
+          </p>
+          <div class="hero-cta">
+            <button class="btn btn-primary" onclick="navigate('projects')">
+              &#x25B6; view_projects()
+            </button>
+            <button class="btn btn-secondary" onclick="navigate('contact')">
+              &#x40; get_in_touch()
+            </button>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- ABOUT -->
-    <section id="about">
-      <div class="section-label">01 &mdash; about</div>
-      <h2 class="section-title">Who I Am</h2>
-      <div class="about-grid fade-in">
-        <div class="about-text">
-          <p>
-            Hi, I'm <strong>FakrulRadzi Othman</strong> — a fullstack developer
-            based in <strong>Kuala Lumpur, Malaysia</strong>. I specialise in
-            building modern web applications with a focus on performance,
-            accessibility, and maintainability.
-          </p>
-          <p>
-            With <strong>3+ years of experience</strong>, I've worked across the
-            full stack — designing databases, architecting APIs, and crafting
-            responsive frontends. I enjoy solving complex problems and turning
-            ideas into production-ready software.
-          </p>
-          <p>
-            When I'm not coding, I enjoy exploring new technologies, building
-            personal projects, and continuously improving my software
-            engineering skills.
-          </p>
-          <br />
-          <a href="FakrulRadzi_Resume.pdf" class="btn btn-secondary" download
-            >&#x21E9; download_resume.pdf</a
-          >
-        </div>
-        <div class="terminal-card">
-          <div class="terminal-bar">
-            <div class="dot dot-red"></div>
-            <div class="dot dot-amber"></div>
-            <div class="dot dot-green"></div>
-            <span class="terminal-title">whoami.sh</span>
+      <!-- ABOUT -->
+      <div class="page" id="about">
+        <div class="sec-label">01 — about</div>
+        <h2 class="sec-title">Who I Am</h2>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              Hi, I'm <strong>FakrulRadzi Othman</strong> — a fullstack
+              developer based in <strong>Kuala Lumpur, Malaysia</strong>. I
+              specialise in building modern web applications with a focus on
+              performance, scalability, and clean architecture.
+            </p>
+            <p>
+              With <strong>3+ years of experience</strong>, I've worked across
+              the full stack — designing databases, architecting REST APIs, and
+              crafting responsive frontends. I've delivered production systems
+              across enterprise, government, and banking sectors.
+            </p>
+            <p>
+              When I'm not coding, I enjoy exploring new technologies and
+              continuously improving my software engineering skills.
+            </p>
+            <br />
+            <a href="FakrulRadzi_Resume.pdf" class="btn btn-secondary" download
+              >&#x21E9; download_resume.pdf</a
+            >
           </div>
-          <div class="terminal-body">
-            <div class="t-line">
-              <span class="t-prompt">$</span
-              ><span class="t-cmd">cat profile.json</span>
+          <div class="terminal-card">
+            <div class="terminal-bar">
+              <div class="dot dot-r"></div>
+              <div class="dot dot-a"></div>
+              <div class="dot dot-g"></div>
+              <span class="t-file">whoami.sh</span>
             </div>
-            <div class="t-output">
-              {<br />
-              &nbsp;&nbsp;<span class="t-key">"name"</span>:
-              <span class="t-val">"FakrulRadzi Othman"</span>,<br />
-              &nbsp;&nbsp;<span class="t-key">"role"</span>:
-              <span class="t-val">"Fullstack Developer"</span>,<br />
-              &nbsp;&nbsp;<span class="t-key">"location"</span>:
-              <span class="t-val">"Kuala Lumpur, Malaysia"</span>,<br />
-              &nbsp;&nbsp;<span class="t-key">"experience"</span>:
-              <span class="t-val">"3+ years"</span>,<br />
-              &nbsp;&nbsp;<span class="t-key">"education"</span>:
-              <span class="t-val"
-                >"Bachelor of Computer Science with Software Engineering"</span
-              >,<br />
-              &nbsp;&nbsp;<span class="t-key">"languages"</span>: [<span
-                class="t-val"
-                >"EN"</span
-              >, <span class="t-val">"MY"</span>],<br />
-              &nbsp;&nbsp;<span class="t-key">"open_to_work"</span>:
-              <span class="t-val">true</span><br />
-              }
-            </div>
-            <div class="t-line">
-              <span class="t-prompt">$</span><span class="t-cmd">_</span>
+            <div class="t-body">
+              <div class="t-line">
+                <span class="t-pr">$</span
+                ><span class="t-cm">cat profile.json</span>
+              </div>
+              <div class="t-out">
+                {<br />
+                &nbsp;&nbsp;<span class="t-k">"name"</span>:
+                <span class="t-v">"FakrulRadzi Othman"</span>,<br />
+                &nbsp;&nbsp;<span class="t-k">"role"</span>:
+                <span class="t-v">"Fullstack Developer"</span>,<br />
+                &nbsp;&nbsp;<span class="t-k">"location"</span>:
+                <span class="t-v">"Kuala Lumpur, MY"</span>,<br />
+                &nbsp;&nbsp;<span class="t-k">"experience"</span>:
+                <span class="t-v">"3+ years"</span>,<br />
+                &nbsp;&nbsp;<span class="t-k">"education"</span>:
+                <span class="t-v">"BSc Computer Science"</span>,<br />
+                &nbsp;&nbsp;<span class="t-k">"languages"</span>: [<span
+                  class="t-v"
+                  >"EN"</span
+                >, <span class="t-v">"MY"</span>],<br />
+                &nbsp;&nbsp;<span class="t-k">"open_to_work"</span>:
+                <span class="t-v">true</span><br />
+                }
+              </div>
+              <div class="t-line">
+                <span class="t-pr">$</span><span class="t-cm">_</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- SKILLS -->
-    <section id="skills">
-      <div class="section-label">02 &mdash; skills</div>
-      <h2 class="section-title">Tech Stack</h2>
-      <div class="skills-grid fade-in">
-        <div class="skill-category">
-          <div class="skill-cat-title">// Frontend</div>
-          <div class="skill-tags">
-            <span class="skill-tag">React</span>
-            <span class="skill-tag">TypeScript</span>
-            <span class="skill-tag">JavaScript</span>
-            <span class="skill-tag">jQuery</span>
-            <span class="skill-tag">Metronic</span>
-            <span class="skill-tag">Tailwind CSS</span>
-            <span class="skill-tag">Bootstrap</span>
-            <span class="skill-tag">HTML5</span>
-            <span class="skill-tag">CSS3</span>
-            <!-- Add / remove your own skills -->
+      <!-- SKILLS -->
+      <div class="page" id="skills">
+        <div class="sec-label">02 — skills</div>
+        <h2 class="sec-title">Tech Stack</h2>
+        <div class="skills-grid">
+          <div class="skill-cat">
+            <div class="skill-cat-title">// Frontend</div>
+            <div class="tags">
+              <span class="tag">React</span><span class="tag">TypeScript</span>
+              <span class="tag">JavaScript</span><span class="tag">jQuery</span>
+              <span class="tag">Metronic</span
+              ><span class="tag">Tailwind CSS</span>
+              <span class="tag">Bootstrap</span><span class="tag">HTML5</span
+              ><span class="tag">CSS3</span>
+            </div>
           </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-cat-title">// Backend</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Php</span>
-            <span class="skill-tag">Java</span>
-            <span class="skill-tag">C#</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">REST API</span>
-            <!-- Add / remove your own skills -->
+          <div class="skill-cat">
+            <div class="skill-cat-title">// Backend</div>
+            <div class="tags">
+              <span class="tag">PHP</span><span class="tag">Java</span>
+              <span class="tag">C#</span><span class="tag">Python</span>
+              <span class="tag">REST API</span>
+            </div>
           </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-cat-title">// Frameworks</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Laravel</span>
-            <span class="skill-tag">Spring Boot</span>
-            <span class="skill-tag">ASP.NET</span>
-            <span class="skill-tag">React TS</span>
-            <!-- Add / remove your own skills -->
+          <div class="skill-cat">
+            <div class="skill-cat-title">// Frameworks</div>
+            <div class="tags">
+              <span class="tag">Laravel</span
+              ><span class="tag">Spring Boot</span>
+              <span class="tag">ASP.NET</span><span class="tag">React TS</span>
+            </div>
           </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-cat-title">// Mobile Development</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Flutter</span>
-            <span class="skill-tag">React Native</span>
-            <!-- Add / remove your own skills -->
+          <div class="skill-cat">
+            <div class="skill-cat-title">// Mobile</div>
+            <div class="tags">
+              <span class="tag">Flutter</span
+              ><span class="tag">React Native</span>
+            </div>
           </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-cat-title">// Database</div>
-          <div class="skill-tags">
-            <span class="skill-tag">MS SQL Server</span>
-            <span class="skill-tag">MySQL</span>
-            <span class="skill-tag">SQLite</span>
-            <!-- Add / remove your own skills -->
+          <div class="skill-cat">
+            <div class="skill-cat-title">// Database</div>
+            <div class="tags">
+              <span class="tag">MS SQL Server</span
+              ><span class="tag">MySQL</span><span class="tag">SQLite</span>
+            </div>
           </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-cat-title">// DevOps & Tools</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Docker</span>
-            <span class="skill-tag">Git</span>
-            <span class="skill-tag">GitHub Actions</span>
-            <span class="skill-tag">Linux</span>
-            <span class="skill-tag">Vercel</span>
-            <span class="skill-tag">AWS</span>
-            <!-- Add / remove your own skills -->
+          <div class="skill-cat">
+            <div class="skill-cat-title">// DevOps & Tools</div>
+            <div class="tags">
+              <span class="tag">Docker</span><span class="tag">Git</span>
+              <span class="tag">GitHub Actions</span
+              ><span class="tag">Linux</span> <span class="tag">Vercel</span
+              ><span class="tag">AWS</span>
+            </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- EXPERIENCE -->
-    <section id="experience">
-      <div class="section-label">03 &mdash; experience</div>
-      <h2 class="section-title">Work History</h2>
-      <div class="exp-list fade-in">
+      <!-- EXPERIENCE -->
+      <div class="page" id="experience">
+        <div class="sec-label">03 — experience</div>
+        <h2 class="sec-title">Work History</h2>
+
         <div class="exp-item">
           <div class="exp-date">
-            <span class="exp-period">Dec 2023 — Present</span>
-            Full-time
+            <span class="exp-period">Dec 2023 — Present</span>Full-time
           </div>
           <div>
-            <div class="exp-role">Application Developer and Analyst</div>
+            <div class="exp-role">Application Developer & Analyst</div>
             <div class="exp-company">@ Lein Hing Holdings Sdn Bhd</div>
             <p class="exp-desc">
-              Full-stack application developer with experience in Laravel, PHP,
-              SQL Server, and MySQL. Skilled in developing business systems, API
-              integrations, database optimization, and enterprise application
-              support, with a focus on delivering efficient and scalable
-              solutions that drive business value.
+              Full-stack developer working with Laravel, PHP, SQL Server, and
+              MySQL. Delivered RM160,000 in operational cost savings through
+              system automation. Focused on business systems, API integrations,
+              and enterprise application support.
             </p>
             <div class="exp-stack">
-              <span class="exp-tech">Bootstrap</span>
-              <span class="exp-tech">jQuery</span>
-              <span class="exp-tech">PHP</span>
-              <span class="exp-tech">Laravel</span>
-              <span class="exp-tech">Flutter</span>
-              <span class="exp-tech">MySQL</span>
-              <span class="exp-tech">MS SQL Server</span>
-              <span class="exp-tech">Microsoft Dynamics SL 2018</span>
+              <span class="exp-tech">Laravel</span
+              ><span class="exp-tech">PHP</span>
+              <span class="exp-tech">Bootstrap</span
+              ><span class="exp-tech">jQuery</span>
+              <span class="exp-tech">Flutter</span
+              ><span class="exp-tech">MySQL</span>
+              <span class="exp-tech">MS SQL Server</span
+              ><span class="exp-tech">Dynamics SL</span>
             </div>
           </div>
         </div>
 
         <div class="exp-item">
           <div class="exp-date">
-            <span class="exp-period">June 2022 — Dec 2023</span>
-            Full-time
+            <span class="exp-period">Jun 2022 — Dec 2023</span>Full-time
           </div>
           <div>
             <div class="exp-role">IT Operations Associate / Manual Tester</div>
             <div class="exp-company">@ Accenture Technology Solutions</div>
             <p class="exp-desc">
-              Supported banking system enhancements and quality assurance
-              activities on AS400 platforms. Experienced in change request
-              implementation, software testing (Unit Testing, SIT, UAT), defect
-              management, and release coordination within large-scale financial
-              systems.
+              Supported banking system enhancements on AS400 platforms. Handled
+              change requests, SIT/UAT testing, defect management, and release
+              coordination within large-scale financial systems.
             </p>
             <div class="exp-stack">
-              <span class="exp-tech">Cobol/RPG</span>
-              <span class="exp-tech">AS400</span>
-              <span class="exp-tech">ALDON</span>
-              <span class="exp-tech">DB2</span>
-              <span class="exp-tech">Unit Testing/SIT/UAT</span>
-              <span class="exp-tech">CI/CD Pipelines</span>
+              <span class="exp-tech">Cobol/RPG</span
+              ><span class="exp-tech">AS400</span>
+              <span class="exp-tech">ALDON</span
+              ><span class="exp-tech">DB2</span>
+              <span class="exp-tech">SIT/UAT</span
+              ><span class="exp-tech">CI/CD</span>
             </div>
           </div>
         </div>
 
         <div class="exp-item">
           <div class="exp-date">
-            <span class="exp-period">May 2021 — May 2022</span>
-            Full-time
+            <span class="exp-period">May 2021 — May 2022</span>Full-time
           </div>
           <div>
             <div class="exp-role">PHP Laravel Developer / IT Support</div>
             <div class="exp-company">@ Jabatan Kesihatan Negeri Sembilan</div>
             <p class="exp-desc">
               Developed and modernized government web applications using Laravel
-              and MySQL while providing end-user IT support, incident
-              management, and system maintenance to ensure reliable service
-              delivery.
+              and MySQL. Provided end-user IT support, incident management, and
+              system maintenance.
             </p>
             <div class="exp-stack">
-              <span class="exp-tech">JavaScript</span>
-              <span class="exp-tech">PHP</span>
-              <span class="exp-tech">MySQL</span>
+              <span class="exp-tech">Laravel</span
+              ><span class="exp-tech">PHP</span>
+              <span class="exp-tech">MySQL</span
+              ><span class="exp-tech">JavaScript</span>
               <span class="exp-tech">Laragon</span>
-              <span class="exp-tech">Laravel</span>
             </div>
           </div>
         </div>
 
         <div class="exp-item">
           <div class="exp-date">
-            <span class="exp-period">Feb 2020 — Jul 2020</span>
-            Full-time
+            <span class="exp-period">Feb 2020 — Jul 2020</span>Full-time
           </div>
           <div>
             <div class="exp-role">Software Engineer</div>
             <div class="exp-company">@ True Capital Asia Sdn Bhd</div>
             <p class="exp-desc">
-              Contributed to the development of a contractor financing platform
-              by building web application features, supporting backend
-              functionality, and collaborating within an Agile development team
-              using version control and software development best practices.
+              Built features for a contractor financing platform, supporting
+              backend functionality in an Agile team using version control and
+              software best practices.
             </p>
             <div class="exp-stack">
-              <span class="exp-tech">PHP</span>
-              <span class="exp-tech">MySQL</span>
-              <span class="exp-tech">HTML/CSS/JavaScript</span>
+              <span class="exp-tech">PHP</span
+              ><span class="exp-tech">MySQL</span>
+              <span class="exp-tech">HTML/CSS/JS</span>
             </div>
           </div>
         </div>
 
         <div class="exp-item">
           <div class="exp-date">
-            <span class="exp-period">Jul 2019 — Dec 2019</span>
-            Internship
+            <span class="exp-period">Jul 2019 — Dec 2019</span>Internship
           </div>
           <div>
             <div class="exp-role">Junior IT / Internship Trainee</div>
             <div class="exp-company">@ Wonder Pod Sdn Bhd</div>
             <p class="exp-desc">
-              Supported website maintenance, quality assurance, and content
-              management for multiple client websites, ensuring functionality,
-              usability, and performance across WordPress-based platforms.
+              Supported website maintenance, QA, and content management for
+              multiple client WordPress sites.
             </p>
             <div class="exp-stack">
-              <span class="exp-tech">Wordpress</span>
-              <span class="exp-tech">PHP</span>
-              <span class="exp-tech">Basecamp</span>
-              <span class="exp-tech">HTML/CSS/JavaScript</span>
+              <span class="exp-tech">WordPress</span
+              ><span class="exp-tech">PHP</span>
+              <span class="exp-tech">HTML/CSS/JS</span
+              ><span class="exp-tech">Basecamp</span>
             </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- PROJECTS -->
-    <section id="projects">
-      <div class="section-label">04 &mdash; projects</div>
-      <h2 class="section-title">Selected Work</h2>
-      <div class="projects-grid fade-in">
-        <div class="project-card">
-          <div class="project-num">// 01</div>
-          <div class="project-name">Project Name One</div>
-          <p class="project-desc">
-            Describe what this project does and why it matters. What problem
-            does it solve? Who uses it? What's the scale or impact?
-          </p>
-          <div class="project-stack">
-            <span class="skill-tag">Next.js</span>
-            <span class="skill-tag">TypeScript</span>
-            <span class="skill-tag">PostgreSQL</span>
+      <!-- PROJECTS -->
+      <div class="page" id="projects">
+        <div class="sec-label">04 — projects</div>
+        <h2 class="sec-title">Personal Projects</h2>
+        <div class="projects-grid">
+          <div class="proj-card">
+            <div class="proj-num">// 01</div>
+            <div class="proj-name">Project 1: Portfolio Website</div>
+            <p class="proj-desc">
+              Developed and deployed a personal portfolio website using HTML,
+              CSS, JavaScript, and GitHub Pages. The project showcases my
+              technical skills, projects, and continuous learning journey.
+            </p>
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">GitHub Pages</span>
+            </div>
+            <div class="proj-links">
+              <!-- <a href="#" class="proj-link">&#x2197; live_demo</a>
+              <a href="#" class="proj-link">&#x2767; github</a> -->
+            </div>
           </div>
-          <div class="project-links">
-            <a href="#" class="project-link">&#x2197; live_demo</a>
-            <a href="#" class="project-link">&#x2767; github</a>
-          </div>
-        </div>
 
-        <div class="project-card">
-          <div class="project-num">// 02</div>
-          <div class="project-name">Project Name Two</div>
-          <p class="project-desc">
-            Another featured project. Highlight interesting technical challenges
-            you overcame or unique aspects of the implementation.
-          </p>
-          <div class="project-stack">
-            <span class="skill-tag">React</span>
-            <span class="skill-tag">Node.js</span>
-            <span class="skill-tag">MongoDB</span>
+          <div class="proj-card">
+            <div class="proj-num">// 02</div>
+            <div class="proj-name">Project 2: Home Server Setup</div>
+            <p class="proj-desc">
+              Built and maintained a personal home server using Ubuntu Server.
+              The environment is used for learning Linux administration, server
+              management, remote access, and self-hosted application deployment.
+            </p>
+            <div class="tags">
+              <span class="tag">Ubuntu Server</span>
+              <span class="tag">Linux Administration</span>
+              <span class="tag">MATE Desktop</span>
+              <span class="tag">XRDP</span>
+            </div>
+            <div class="proj-links">
+              <!-- <a href="#" class="proj-link">&#x2197; live_demo</a>
+              <a href="#" class="proj-link">&#x2767; github</a> -->
+            </div>
           </div>
-          <div class="project-links">
-            <a href="#" class="project-link">&#x2197; live_demo</a>
-            <a href="#" class="project-link">&#x2767; github</a>
-          </div>
-        </div>
 
-        <div class="project-card">
-          <div class="project-num">// 03</div>
-          <div class="project-name">Project Name Three</div>
-          <p class="project-desc">
-            A third project. Consider including a mix: a professional project, a
-            side project, and an open-source contribution.
-          </p>
-          <div class="project-stack">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">FastAPI</span>
-            <span class="skill-tag">Docker</span>
+          <div class="proj-card">
+            <div class="proj-num">// 03</div>
+            <div class="proj-name">
+              Project 3: Catering Management System (Ongoing)
+            </div>
+            <p class="proj-desc">
+              Developing a Catering Management System using React TypeScript,
+              Tailwind CSS, ASP.NET 8, MSSQL, JWT Authentication, and Git.
+              Responsibilities include frontend development, API integration,
+              authentication, route protection, and collaborative development
+              using Git feature-branch workflows.
+            </p>
+            <div class="tags">
+              <span class="tag">Tailwind CSS</span
+              ><span class="tag">React TypeScript</span
+              ><span class="tag">ASP.NET 8</span><span class="tag">MSSQL</span>
+            </div>
+            <div class="proj-links">
+              <!-- <a href="#" class="proj-link">&#x2197; live_demo</a>
+              <a href="#" class="proj-link">&#x2767; github</a> -->
+            </div>
           </div>
-          <div class="project-links">
-            <a href="#" class="project-link">&#x2197; live_demo</a>
-            <a href="#" class="project-link">&#x2767; github</a>
-          </div>
-        </div>
 
-        <div class="project-card">
-          <div class="project-num">// 04</div>
-          <div class="project-name">Project Name Four</div>
-          <p class="project-desc">
-            More projects you're proud of. Open source contributions count too —
-            show breadth across frontend, backend, tooling, or infrastructure.
-          </p>
-          <div class="project-stack">
-            <span class="skill-tag">Vue.js</span>
-            <span class="skill-tag">GraphQL</span>
-            <span class="skill-tag">Redis</span>
-          </div>
-          <div class="project-links">
-            <a href="#" class="project-link">&#x2197; live_demo</a>
-            <a href="#" class="project-link">&#x2767; github</a>
-          </div>
+          <!-- <div class="proj-card">
+            <div class="proj-num">// 04</div>
+            <div class="proj-name">Project Name Four</div>
+            <p class="proj-desc">
+              More projects you're proud of. Open source contributions count too
+              — show breadth across your stack.
+            </p>
+            <div class="tags">
+              <span class="tag">ASP.NET</span><span class="tag">C#</span
+              ><span class="tag">MSSQL</span>
+            </div>
+            <div class="proj-links">
+              <a href="#" class="proj-link">&#x2197; live_demo</a>
+              <a href="#" class="proj-link">&#x2767; github</a>
+            </div>
+          </div> -->
         </div>
       </div>
-    </section>
 
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="section-label" style="justify-content: center">
-        05 &mdash; contact
-      </div>
-      <h2 class="section-title" style="text-align: center">
-        Let's Build Something
-      </h2>
-      <div class="contact-inner fade-in">
-        <p class="contact-desc">
-          I'm currently open to new opportunities — freelance projects,
-          full-time roles, or just a good technical conversation. My inbox is
-          always open.
-        </p>
-        <div style="margin-bottom: 2rem">
+      <!-- CONTACT -->
+      <div class="page" id="contact">
+        <div class="contact-inner">
+          <div class="sec-label" style="justify-content: center">
+            05 — contact
+          </div>
+          <h2 class="sec-title">Let's Build Something</h2>
+          <p class="contact-desc">
+            I'm currently open to new opportunities — freelance projects,
+            full-time roles, or just a good technical conversation. My inbox is
+            always open.
+          </p>
           <a href="mailto:mfakrulradziothman@gmail.com" class="contact-email"
             >mfakrulradziothman@gmail.com</a
           >
-        </div>
-        <div class="contact-links">
-          <a
-            href="https://github.com/FakrulRadzi97"
-            target="_blank"
-            class="contact-link"
-          >
-            &#x2767; GitHub
-          </a>
-          <a
-            href="https://www.linkedin.com/in/fakrulradzi-othman/"
-            target="_blank"
-            class="contact-link"
-          >
-            &#x25A4; LinkedIn
-          </a>
-          <a
-            href="https://twitter.com/yourusername"
-            target="_blank"
-            class="contact-link"
-            style="display: none"
-          >
-            &#x2603; Twitter / X
-          </a>
+          <div class="contact-links">
+            <a
+              href="https://github.com/FakrulRadzi97"
+              target="_blank"
+              class="contact-link"
+              >&#x2767; GitHub</a
+            >
+            <a
+              href="https://www.linkedin.com/in/fakrulradzi-othman/"
+              target="_blank"
+              class="contact-link"
+              >&#x25A4; LinkedIn</a
+            >
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+    <!-- end #app -->
 
-    <!-- FOOTER -->
     <footer>
-      <span
+      <em
         >&gt; Designed &amp; built by
-        <span style="color: var(--primary)">FRs</span></span
+        <span style="color: var(--primary)">FRs</span></em
       >
-      <span>2026 &mdash; <span>crafted with &#x2665;</span></span>
+      <span>2026 — <em>crafted with &#x2665;</em></span>
     </footer>
 
     <script>
-      // Fade-in on scroll
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              e.target.classList.add("visible");
-              observer.unobserve(e.target);
-            }
-          });
-        },
-        { threshold: 0.1 },
-      );
+      const pages = document.querySelectorAll(".page");
+      const navBtns = document.querySelectorAll(".nav-links button");
 
-      document
-        .querySelectorAll(".fade-in")
-        .forEach((el) => observer.observe(el));
+      function navigate(id) {
+        pages.forEach((p) => p.classList.toggle("active", p.id === id));
+        navBtns.forEach((b) =>
+          b.classList.toggle("active", b.dataset.page === id),
+        );
+        // Reset scroll position of the activated section
+        const target = document.getElementById(id);
+        if (target) target.scrollTop = 0;
+      }
 
-      // Active nav highlight
-      const sections = document.querySelectorAll("section[id]");
-      const navLinks = document.querySelectorAll(".nav-links a");
-
-      window.addEventListener("scroll", () => {
-        let current = "";
-        sections.forEach((s) => {
-          if (window.scrollY >= s.offsetTop - 100)
-            current = s.getAttribute("id");
-        });
-        navLinks.forEach((a) => {
-          a.style.color =
-            a.getAttribute("href") === `#${current}` ? "var(--primary)" : "";
-        });
+      navBtns.forEach((btn) => {
+        btn.addEventListener("click", () => navigate(btn.dataset.page));
       });
     </script>
   </body>
